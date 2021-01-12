@@ -8,7 +8,7 @@ This directory contains a Python app that would enable you to invoke direct meth
 |-------------------------|---------------------------------------------------------------|
 | `.gitignore`            | Defines what to ignore at commit time.                        |
 | `README.md`             | This README file.                                             |
-| `main.py`               | The main program file                                         |
+| `main.py`               | The main program file.                                        |
 | `cvr.py`                | CVR topology builder file.                                    |
 | `evr.py`                | EVR topology builder file.                                    |
 | `motion_detection.py`   | Motion detection topology builder file.                       |

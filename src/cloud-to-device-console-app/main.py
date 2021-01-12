@@ -6,7 +6,7 @@ from builtins import input
 from azure.iot.hub import IoTHubRegistryManager
 from azure.iot.hub.models import CloudToDeviceMethod, CloudToDeviceMethodResult
 from azure.media.analyticsedge import *
-from crv import Cvr
+from cvr import Cvr
 from evr import Evr
 from motion_detection import MotionDetection
 
@@ -26,8 +26,6 @@ class GraphManager:
 
         self.device_id = config['deviceId']
         self.module_id = config['moduleId']
-        self.api_version = '2.0'
-        self.graph_instance_name = "graphInstance1"
 
         self.registry_manager = IoTHubRegistryManager(config['IoThubConnectionString'])
         self.rtsp_url = config['rtspUrl']
@@ -36,18 +34,25 @@ class GraphManager:
         print(message)
         return input()
 
+    """
+    Create and invoke the CloudToDeviceMethod to execute a Direct Method on the device.
+    """
     def invoke_module_method(self, method):
+        # Get the name of the Direct Method
         method_name =  method.method_name
+        # Get the payload of the Direct Method
         payload = method.serialize()
         direct_method = CloudToDeviceMethod(method_name=method_name, payload=payload)
         
         print("\n-----------------------  Request: %s  --------------------------------------------------\n" % method_name)
         print(json.dumps(payload, indent=4))
         
+        # Invoke the Direct Method
         resp = self.registry_manager.invoke_device_module_method(self.device_id, self.module_id, direct_method)
         
         print("\n---------------  Response: %s - Status: %s  ---------------\n" % (method_name, resp.status))
 
+        # Check if the execution was successful and print out the payload (if available)
         if resp.payload is not None and 'error' in resp.payload:
             raise Exception(json.dumps(resp.payload['error'], indent=4))
         elif resp.payload is not None:
@@ -80,10 +85,14 @@ class GraphManager:
     def graph_instance_delete(self, graph_instance_name):
         self.invoke_module_method(MediaGraphInstanceDeleteRequest(name=graph_instance_name))
     
+    """
+    Create an instance of a Graph Instance and set the required instance parameters
+    """
     def create_graph_instance(self, graph_topology, rtsp_url):
         graph_instance_name = "Sample-Graph-1"
+        graph_instance_description = "Sample graph description"
         url_param = MediaGraphParameterDefinition(name="rtspUrl", value=rtsp_url)
-        graph_instance_properties = MediaGraphInstanceProperties(description="Sample graph description", topology_name=graph_topology.name, parameters=[url_param])
+        graph_instance_properties = MediaGraphInstanceProperties(description=graph_instance_description, topology_name=graph_topology.name, parameters=[url_param])
 
         graph_instance = MediaGraphInstance(name=graph_instance_name, properties=graph_instance_properties)
 
