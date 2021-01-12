@@ -1,6 +1,9 @@
 import logging
 from azure.media.analyticsedge import *
 
+"""
+Helper class for building an Event-based video recording graph topology
+"""
 class Evr:
     
     def __init__(self):

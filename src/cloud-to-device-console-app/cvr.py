@@ -1,6 +1,9 @@
 import logging
 from azure.media.analyticsedge import *
 
+"""
+Helper class for building a Continuous video recording graph topology
+"""
 class Cvr:
     
     def __init__(self):

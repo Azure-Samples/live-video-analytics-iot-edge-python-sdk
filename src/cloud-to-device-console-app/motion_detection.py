@@ -1,6 +1,9 @@
 import logging
 from azure.media.analyticsedge import *
 
+"""
+Helper class for building a Motion detection graph topology
+"""
 class MotionDetection:
     
     def __init__(self):

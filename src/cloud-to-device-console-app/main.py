@@ -101,7 +101,7 @@ class GraphManager:
 if __name__ == '__main__':
     manager = GraphManager()
     
-    selected_graph_topology = manager.invoke_wait_for_input("Choose the graph topology to test: 1-CRV, 2-EVR or 3-Motion detection")
+    selected_graph_topology = manager.invoke_wait_for_input("Choose the graph topology to test: 1-CVR, 2-EVR or 3-Motion detection")
 
     graph_topology = graph_topologies(selected_graph_topology)
 
