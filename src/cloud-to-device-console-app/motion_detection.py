@@ -19,18 +19,17 @@ class MotionDetection:
 
         # Sources
         source = MediaGraphRtspSource(name="rtspSource", endpoint=MediaGraphUnsecuredEndpoint(url="${rtspUrl}", credentials=MediaGraphUsernamePasswordCredentials(username="${rtspUserName}", password="${rtspPassword}")))
-        node = MediaGraphNodeInput(node_name="rtspSource")
+        node_rtspSource = MediaGraphNodeInput(node_name="rtspSource")
 
         # Processors
-        node_processor = MediaGraphNodeInput(node_name="rtspSource")
-        motion_processor = MediaGraphMotionDetectionProcessor(name="motionDetection", inputs=node_processor, sensitivity="${motionSensitivity}")
+        motion_processor = MediaGraphMotionDetectionProcessor(name="motionDetection", inputs=[node_rtspSource], sensitivity="${motionSensitivity}")
 
         # Sinks
         motion_detection_node = MediaGraphNodeInput(node_name="motionDetection")
         sink = MediaGraphIoTHubMessageSink(name="hubSink", inputs=[motion_detection_node], 
                 hub_output_name="inferenceOutput")
         
-        graph_properties.parameters = [user_name_param, password_param, url_param]
+        graph_properties.parameters = [user_name_param, password_param, url_param, motion_sensitivity]
         graph_properties.sources = [source]
         graph_properties.processors = [motion_processor]
         graph_properties.sinks = [sink]

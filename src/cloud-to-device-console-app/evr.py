@@ -16,17 +16,16 @@ class Evr:
         password_param = MediaGraphParameterDeclaration(name="rtspPassword", type="String", description="rtsp source password.", default="testpassword")
         url_param = MediaGraphParameterDeclaration(name="rtspUrl", type="String")
         motion_sensitivity = MediaGraphParameterDeclaration(name="motionSensitivity", type="String", description="motion detection sensitivity", default="medium")
-        motion_sensitivity = MediaGraphParameterDeclaration(name="fileSinkOutputName", type="String", description="file sink output name", default="filesinkOutput")
+        fileSinkOutputName = MediaGraphParameterDeclaration(name="fileSinkOutputName", type="String", description="file sink output name", default="filesinkOutput")
 
         # Sources
         source = MediaGraphRtspSource(name="rtspSource", endpoint=MediaGraphUnsecuredEndpoint(url="${rtspUrl}", credentials=MediaGraphUsernamePasswordCredentials(username="${rtspUserName}", password="${rtspPassword}")))
-        node = MediaGraphNodeInput(node_name="rtspSource")
+        node_rtspSource = MediaGraphNodeInput(node_name="rtspSource")
 
         # Processors
-        node_processor = MediaGraphNodeInput(node_name="rtspSource")
-        motion_processor = MediaGraphMotionDetectionProcessor(name="motionDetection", inputs=node_processor, sensitivity="${motionSensitivity}")
-
-        motion_detection_node = MediaGraphSignalGateProcessor(name="signalGateProcessor", inputs=[motion_processor, node_processor],
+        motion_processor = MediaGraphMotionDetectionProcessor(name="motionDetection", inputs=[node_rtspSource], sensitivity="${motionSensitivity}")
+        motion_node = MediaGraphNodeInput(node_name="motionDetection")
+        signal_gate_processor = MediaGraphSignalGateProcessor(name="signalGateProcessor", inputs=[motion_node, node_rtspSource],
             activation_signal_offset="PT0S", minimum_activation_time="PT5S", maximum_activation_time="PT5S", activation_evaluation_window="PT1S")
         
         # Sinks
@@ -35,9 +34,9 @@ class Evr:
                 file_name_pattern='sampleFilesFromEVR-${fileSinkOutputName}-${System.DateTime}', 
                 base_directory_path="/var/media", maximum_size_mi_b=512)
         
-        graph_properties.parameters = [user_name_param, password_param, url_param]
+        graph_properties.parameters = [user_name_param, password_param, url_param, motion_sensitivity, fileSinkOutputName]
         graph_properties.sources = [source]
-        graph_properties.processors = [motion_processor, motion_detection_node]
+        graph_properties.processors = [motion_processor, signal_gate_processor]
         graph_properties.sinks = [sink]
         
         graph = MediaGraphTopology(name=self.graph_topology_name, properties=graph_properties)

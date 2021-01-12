@@ -50,7 +50,7 @@ class GraphManager:
 
         if resp.payload is not None and 'error' in resp.payload:
             raise Exception(json.dumps(resp.payload['error'], indent=4))
-        else:
+        elif resp.payload is not None:
             print(json.dumps(resp.payload, indent=4))
     
     def graph_topology_set(self, graph_topology):
