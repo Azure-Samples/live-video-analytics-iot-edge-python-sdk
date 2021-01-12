@@ -1,45 +1,19 @@
-# Live Video Analytics cloud to device sample console app
+# Live Video Analytics cloud to device Python app
 
-This directory contains a dotnet core sample app that would enable you to invoke direct methods exposed by the Live Video Analytics on IoT Edge module using the C# based SDK methods.
+This directory contains a Python app that would enable you to invoke direct methods exposed by the Live Video Analytics on IoT Edge module using the Python based SDK methods.
 
 ## Contents
 
 | File/folder             | Description                                                   |
 |-------------------------|---------------------------------------------------------------|
-| `c2d-console-app.csproj`| Project file.                                                 |
 | `.gitignore`            | Defines what to ignore at commit time.                        |
 | `README.md`             | This README file.                                             |
-| `Models.cs`             | Dependent file for the main program file.                     |
-| `Program.cs`            | The main program file                                         |
-
-## Prerequisites
-
-1. An active Azure subscription
-2. Azure resources deployed in the Azure subscription
-
-    a. IoT Hub
-
-    b. Storage Account
-
-    c. Media Services
-
-    d. Azure container registry
-
-3. A Linux edge device with [IoT Edge runtime](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-linux)
-
-> [!TIP]
-> You can use the **[LVA resources setup script](https://github.com/Azure/live-video-analytics/tree/master/edge/setup)** to deploy the Azure resources mentioned above, along with an Azure Linux VM to serve as your IoT Edge device.
-
-4. [Visual Studio Code](https://code.visualstudio.com/) on your development machine with following extensions
-
-    a. [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools)
-
-    b. [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
-
-5. [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) on your development machine
-
-6. [Docker](https://docs.docker.com/engine/install/) on your development machine
-
+| `main.py`               | The main program file                                         |
+| `cvr.py`                | CVR topology builder file.                                    |
+| `evr.py`                | EVR topology builder file.                                    |
+| `motion_detection.py`   | Motion detection topology builder file.                       |
+| `requirements.txt`      | List of all dependent Python libraries.                       |
+| `appsettings.json`      | List of all configuration parameters used.                    |
 
 ## Setup
 
@@ -52,19 +26,14 @@ Provide values for all parameters found in **appsettings.json**.
     "IoThubConnectionString" : "",
     "deviceId" : "",
     "moduleId" : "",
-    "rtspUrl" : "",
-    "rtspUserName": "",
-    "rtspPassword": ""
+    "rtspUrl" : ""
 }
 ```
 
 * **IoThubConnectionString** - Refers to the connection string of your IoT Hub
 * **deviceId** - Refers to your IoT Edge device id (registered with your IoT Hub)
 * **moduleId** - Refers to the module id of Live Video Analytics on IoT Edge module (when deployed to the IoT Edge device)
-* **rtspUrl** - Refers to the RTSP camera address to which the demo will connect to (This is OPTIONAL. Leave empty if you're using the RTSP simulator)
-* **rtspUserName** - Refers to the RTSP camera user name to which the demo will connect to (This is OPTIONAL. Leave empty if you're using the RTSP simulator)
-* **rtspUrl** - Refers to the RTSP camera password to which the demo will connect to (This is OPTIONAL. Leave empty if you're using the RTSP simulator)
-
+* **rtspUrl** - Refers to the RTSP camera address to which the demo will connect to
 
 ### 2. Create .env file
 
