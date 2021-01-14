@@ -1,10 +1,8 @@
 import json
-from os import path
 import pathlib
-import logging
 from builtins import input
 from azure.iot.hub import IoTHubRegistryManager
-from azure.iot.hub.models import CloudToDeviceMethod, CloudToDeviceMethodResult
+from azure.iot.hub.models import CloudToDeviceMethod
 from azure.media.analyticsedge import *
 from cvr import Cvr
 from evr import Evr
@@ -29,9 +27,14 @@ class GraphManager:
 
         self.registry_manager = IoTHubRegistryManager(config['IoThubConnectionString'])
         self.rtsp_url = config['rtspUrl']
+        self.printColors = { 
+            'yellow': '\033[93m {}\033[00m',
+            'green': '\033[92m {}\033[00m',
+            'red': '\033[91m {}\033[00m'
+        }
 
     def invoke_wait_for_input(self, message):
-        print(message)
+        print(self.printColors['yellow'].format(message))
         return input()
 
     """
@@ -44,13 +47,13 @@ class GraphManager:
         payload = method.serialize()
         direct_method = CloudToDeviceMethod(method_name=method_name, payload=payload)
         
-        print("\n-----------------------  Request: %s  --------------------------------------------------\n" % method_name)
+        print(self.printColors['green'].format("\n-----------------------  Request: %s  --------------------------------------------------\n" % method_name))
         print(json.dumps(payload, indent=4))
         
         # Invoke the Direct Method
         resp = self.registry_manager.invoke_device_module_method(self.device_id, self.module_id, direct_method)
         
-        print("\n---------------  Response: %s - Status: %s  ---------------\n" % (method_name, resp.status))
+        print(self.printColors['green'].format("\n---------------  Response: %s - Status: %s  ---------------\n" % (method_name, resp.status)))
 
         # Check if the execution was successful and print out the payload (if available)
         if resp.payload is not None and 'error' in resp.payload:
@@ -132,4 +135,4 @@ if __name__ == '__main__':
             manager.graph_topology_delete(graph_topology.name)
 
         except Exception as ex:
-            print(ex)
+            print(manager.printColors['red'].format(ex))
