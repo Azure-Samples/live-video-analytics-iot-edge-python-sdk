@@ -17,7 +17,10 @@ This directory contains a Python app that would enable you to invoke direct meth
 
 ## Setup
 
-### 1. Fill in the values for appsettings.json file
+### 1. Install Python dependencies
+Install python dependencies from requirements.txt. This can be done by running pip install -r src\cloud-to-device-console-app\requirements.txt.
+
+### 2. Fill in the values for appsettings.json file
 
 Provide values for all parameters found in **appsettings.json**.
 
@@ -35,7 +38,7 @@ Provide values for all parameters found in **appsettings.json**.
 * **moduleId** - Refers to the module id of Live Video Analytics on IoT Edge module (when deployed to the IoT Edge device)
 * **rtspUrl** - Refers to the RTSP camera address to which the demo will connect to
 
-### 2. Create .env file
+### 3. Create .env file
 
 Create a file named **.env** in src/edge folder and add the following text to it. Provide values for all variables.
 
