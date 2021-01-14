@@ -2,3 +2,4 @@
 certifi
 azure-iot-device
 azure-iot-hub
+azure-media-analytics-edge
