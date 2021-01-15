@@ -4,7 +4,7 @@ from azure.media.analyticsedge import *
 """
 Helper class for building an Event-based video recording graph topology
 """
-class Evr:
+class EvrTopology:
     
     def __init__(self):
         self.graph_topology_description = "Event - based video recording to local files based on motion events"
@@ -15,11 +15,11 @@ class Evr:
         graph_properties.description = self.graph_topology_description
 
         # Parameters
-        user_name_param = MediaGraphParameterDeclaration(name="rtspUserName", type="String", description="rtsp source user name.", default="testusername")
-        password_param = MediaGraphParameterDeclaration(name="rtspPassword", type="String", description="rtsp source password.", default="testpassword")
-        url_param = MediaGraphParameterDeclaration(name="rtspUrl", type="String")
-        motion_sensitivity = MediaGraphParameterDeclaration(name="motionSensitivity", type="String", description="motion detection sensitivity", default="medium")
-        fileSinkOutputName = MediaGraphParameterDeclaration(name="fileSinkOutputName", type="String", description="file sink output name", default="filesinkOutput")
+        user_name_param = MediaGraphParameterDeclaration(name="rtspUserName", type=MediaGraphParameterType.STRING, description="rtsp source user name.", default="testusername")
+        password_param = MediaGraphParameterDeclaration(name="rtspPassword", type=MediaGraphParameterType.STRING, description="rtsp source password.", default="testpassword")
+        url_param = MediaGraphParameterDeclaration(name="rtspUrl", type=MediaGraphParameterType.STRING)
+        motion_sensitivity = MediaGraphParameterDeclaration(name="motionSensitivity", type=MediaGraphParameterType.STRING, description="motion detection sensitivity", default="medium")
+        fileSinkOutputName = MediaGraphParameterDeclaration(name="fileSinkOutputName", type=MediaGraphParameterType.STRING, description="file sink output name", default="filesinkOutput")
 
         # Sources
         source = MediaGraphRtspSource(name="rtspSource", endpoint=MediaGraphUnsecuredEndpoint(url="${rtspUrl}", credentials=MediaGraphUsernamePasswordCredentials(username="${rtspUserName}", password="${rtspPassword}")))

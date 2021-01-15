@@ -4,15 +4,15 @@ from builtins import input
 from azure.iot.hub import IoTHubRegistryManager
 from azure.iot.hub.models import CloudToDeviceMethod
 from azure.media.analyticsedge import *
-from cvr import Cvr
-from evr import Evr
-from motion_detection import MotionDetection
+from cvr import CvrTopology
+from evr import EvrTopology
+from motion_detection import MotionDetectionTopology
 
 def graph_topologies(index):
     switcher={
-            '1': Cvr().build(),
-            '2': Evr().build(),
-            '3': MotionDetection().build()
+            '1': CvrTopology().build(),
+            '2': EvrTopology().build(),
+            '3': MotionDetectionTopology().build()
         }
     return switcher.get(index, None)
 

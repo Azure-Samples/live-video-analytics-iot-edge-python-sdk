@@ -4,7 +4,7 @@ from azure.media.analyticsedge import *
 """
 Helper class for building a Motion detection graph topology
 """
-class MotionDetection:
+class MotionDetectionTopology:
     
     def __init__(self):
         self.graph_topology_description = "Analyzing live video to detect motion and emit events"
@@ -15,10 +15,10 @@ class MotionDetection:
         graph_properties.description = self.graph_topology_description
 
         # Parameters
-        user_name_param = MediaGraphParameterDeclaration(name="rtspUserName", type="String", description="rtsp source user name.", default="testusername")
-        password_param = MediaGraphParameterDeclaration(name="rtspPassword", type="String", description="rtsp source password.", default="testpassword")
-        url_param = MediaGraphParameterDeclaration(name="rtspUrl", type="String")
-        motion_sensitivity = MediaGraphParameterDeclaration(name="motionSensitivity", type="String", description="motion detection sensitivity", default="medium")
+        user_name_param = MediaGraphParameterDeclaration(name="rtspUserName", type=MediaGraphParameterType.STRING, description="rtsp source user name.", default="testusername")
+        password_param = MediaGraphParameterDeclaration(name="rtspPassword", type=MediaGraphParameterType.STRING, description="rtsp source password.", default="testpassword")
+        url_param = MediaGraphParameterDeclaration(name="rtspUrl", type=MediaGraphParameterType.STRING)
+        motion_sensitivity = MediaGraphParameterDeclaration(name="motionSensitivity", type=MediaGraphParameterType.STRING, description="motion detection sensitivity", default="medium")
 
         # Sources
         source = MediaGraphRtspSource(name="rtspSource", endpoint=MediaGraphUnsecuredEndpoint(url="${rtspUrl}", credentials=MediaGraphUsernamePasswordCredentials(username="${rtspUserName}", password="${rtspPassword}")))

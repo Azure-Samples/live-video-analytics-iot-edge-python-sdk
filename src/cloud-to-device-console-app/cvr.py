@@ -4,7 +4,7 @@ from azure.media.analyticsedge import *
 """
 Helper class for building a Continuous video recording graph topology
 """
-class Cvr:
+class CvrTopology:
     
     def __init__(self):
         self.graph_topology_description = "Continuous video recording to an Azure Media Services Asset"
