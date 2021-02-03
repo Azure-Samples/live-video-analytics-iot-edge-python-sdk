@@ -12,6 +12,8 @@ This directory contains a Python app that would enable you to invoke direct meth
 | `cvr.py`                | CVR topology builder file.                                    |
 | `evr.py`                | EVR topology builder file.                                    |
 | `motion_detection.py`   | Motion detection topology builder file.                       |
+| `evr_hub_assets.py`     | EVR hub assets topology builder file.                         |
+| `http_extension.py`     | Http Extension topology builder file.                         |
 | `requirements.txt`      | List of all dependent Python libraries.                       |
 | `appsettings.json`      | List of all configuration parameters used.                    |
 

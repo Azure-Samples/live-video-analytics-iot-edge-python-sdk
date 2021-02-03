@@ -1,4 +1,3 @@
-import logging
 from azure.media.analyticsedge import *
 
 """
