@@ -108,7 +108,7 @@ class GraphManager:
 if __name__ == '__main__':
     manager = GraphManager()
     
-    selected_graph_topology = manager.invoke_wait_for_input("Choose the graph topology to test: 1-CVR, 2-EVR, 3-Motion detection, 4-Inference using HTTP Extension or 5-Inference using ObjectCounter module")
+    selected_graph_topology = manager.invoke_wait_for_input("Choose the graph topology to test: 1-Continuous Video Recording, 2-Event Based Video Recording to edge device, 3-Motion detection, 4-Inference using HTTP Extension or 5-Inference using ObjectCounter module")
 
     graph_topology = graph_topologies(selected_graph_topology)
 
